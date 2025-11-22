@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/require-await */
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
+import * as entities from '../../../src/core/entities/index';
 
 config();
 
@@ -12,10 +15,14 @@ const initializeDataSource = async () => {
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    synchronize: false,
+    synchronize: true,
     logging: false,
     ssl: false,
     migrations: [],
+    entities: Object.values(entities).filter(
+      (entity: any) =>
+        typeof entity === 'function' && /^[A-Z]/.test(entity.name),
+    ),
   };
 
   const dataSource = new DataSource(dataSourceDbManager);
