@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14 # Especifica la imagen y versión de PostgreSQL
+    restart: always # Reinicia el contenedor si se detiene automáticamente
+    environment:
+      POSTGRES_DB: holbarth # Define el nombre de la base de datos
+      POSTGRES_USER: admin_holbarth # Define el nombre de usuario
+      POSTGRES_PASSWORD: Holbarth2025* # Define la contraseña
+    ports:
+      - "5432:5432" # Mapea el puerto 5432 de tu máquina al contenedor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ # Monta el volumen llamado 'postgres_data' en el directorio de datos de Postgres
+      # - ./mi_directorio_local:/var/lib/postgresql/data/ # Alternativa: montando un directorio local
+volumes:
+  postgres_data: # Define el volumen nombrado que Docker administrará
