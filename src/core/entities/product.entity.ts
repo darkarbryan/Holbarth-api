@@ -59,4 +59,11 @@ export class ProductEntity extends BaseEntity<ProductEntity> {
 
   @ManyToOne(() => ProductCategoryEntity, (data) => data.product)
   productCategory: ProductCategoryEntity;
+
+  @Column({
+    name: 'product_category_id',
+    type: 'bigint',
+    nullable: true,
+  })
+  productCategoryId?: number;
 }

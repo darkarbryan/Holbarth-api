@@ -15,8 +15,11 @@ export class ProductRepository extends ProductPort {
     }
 
     async create(productData: ICreateProduct): Promise<IProduct> {
-        const product = this.productRepository.create(productData);
-        return await this.productRepository.save(product);
+        const productEntity = this.productRepository.create({
+            ...productData,
+            productCategoryId: productData.productCategoryId
+        });
+        return await this.productRepository.save(productEntity);
     }
 
     async findAll(): Promise<IProduct[]> {
@@ -41,7 +44,11 @@ export class ProductRepository extends ProductPort {
     }
 
     async update(id: number, productData: IUpdateProduct): Promise<IProduct | null> {
-        await this.productRepository.update(id, productData);
+        const updateData = {
+            ...productData,
+            productCategoryId: productData.productCategoryId
+        };
+        await this.productRepository.update(id, updateData);
         return await this.findById(id);
     }
 
