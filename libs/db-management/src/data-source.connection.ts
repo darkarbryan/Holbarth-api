@@ -2,10 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/require-await */
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { config } from 'dotenv';
 import * as entities from '../../../src/core/entities/index';
-
-config();
 
 const initializeDataSource = async () => {
   const dataSourceDbManager: DataSourceOptions = {

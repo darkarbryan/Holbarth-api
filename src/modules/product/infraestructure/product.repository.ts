@@ -57,7 +57,7 @@ export class ProductRepository extends ProductPort {
             status: false,
             deletedAt: new Date()
         });
-        return result.affected > 0;
+        return (result.affected ?? 0) > 0;
     }
 
     async findByCategory(categoryId: number): Promise<IProduct[]> {

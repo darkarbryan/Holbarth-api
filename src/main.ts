@@ -1,41 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { ResponseInterceptor } from './core/interceptors';
 import { NestFactory, Reflector } from '@nestjs/core';
-import * as bodyParser from 'body-parser';
-import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
-
-  app.use(
-    bodyParser.raw({
-      type: 'application/jwt', // <-- se ejecuta SOLO si Content-Type es application/jwt
-    }),
-  );
-
-  app.use(
-    bodyParser.json({
-      limit: '10mb',
-      type: (req) => {
-        const contentType = req.headers['content-type'] || '';
-        return contentType.includes('application/json');
-      },
-    }),
-  );
-
-  // (Opcional) urlencoded
-  app.use(
-    bodyParser.urlencoded({
-      limit: '10mb',
-      extended: true,
-    }),
-  );
 
   app.setGlobalPrefix('api/v1');
 

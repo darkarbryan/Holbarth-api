@@ -47,6 +47,6 @@ export class UserRepository extends UserPort {
             status: false,
             deletedAt: new Date()
         });
-        return result.affected > 0;
+        return (result.affected ?? 0) > 0;
     }
 }

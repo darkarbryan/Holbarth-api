@@ -4,7 +4,6 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export interface IBaseModel {
   id?: number;
@@ -26,7 +25,6 @@ export class BaseEntity<T> implements IBaseModel {
   })
   id?: number;
 
-  @ApiHideProperty()
   @Column('int', {
     nullable: true,
     select: true,
@@ -34,14 +32,12 @@ export class BaseEntity<T> implements IBaseModel {
   })
   createdBy?: number;
 
-  @ApiHideProperty()
   @CreateDateColumn({
     select: true,
     name: 'created_at',
   })
   createdAt?: Date;
 
-  @ApiHideProperty()
   @Column('int', {
     nullable: true,
     select: false,
@@ -58,7 +54,6 @@ export class BaseEntity<T> implements IBaseModel {
   })
   updatedAt?: Date;
 
-  @ApiHideProperty()
   @Column('int', {
     nullable: true,
     select: false,
@@ -66,7 +61,6 @@ export class BaseEntity<T> implements IBaseModel {
   })
   deletedBy?: number;
 
-  @ApiHideProperty()
   @Column('timestamp', {
     nullable: true,
     select: false,
@@ -74,12 +68,6 @@ export class BaseEntity<T> implements IBaseModel {
   })
   deletedAt?: Date;
 
-  @ApiProperty({
-    description: 'Estado del registro',
-    example: 1,
-    required: false,
-    name: 'status',
-  })
   @Column('boolean', { default: true })
   status?: boolean;
 
