@@ -26,6 +26,13 @@ export class UserEntity extends BaseEntity<UserEntity> {
     comment: 'Código del estado del usuario',
   })
   userStatusCode: string;
-  
-  userStatus: string;
+
+  @Column({
+    name: 'role',
+    type: 'varchar',
+    nullable: false,
+    default: 'DEFAULT',
+    comment: 'Rol del usuario',
+  })
+  role: string;
 }
