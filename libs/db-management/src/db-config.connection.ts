@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as entities from '../../../src/core/entities/index';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export const getTypeOrmModuleOptionsDbManager = () => {
   return TypeOrmModule.forRootAsync({
