@@ -7,7 +7,9 @@ import {
   Body,
   Param,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import {
   CreateProductService,
   FindProductService,
@@ -17,6 +19,7 @@ import {
 import { CreateProductDto, UpdateProductDto } from '../dto';
 
 @Controller('products')
+@UseGuards(JwtAuthGuard)
 export class ProductController {
   constructor(
     private readonly createProductService: CreateProductService,

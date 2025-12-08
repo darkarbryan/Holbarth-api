@@ -7,22 +7,25 @@ import { IUser } from 'src/modules/user/domain/interfaces';
 
 @Injectable()
 export class LoginRepository extends LoginPort {
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
-    ) {
-        super();
-    }
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {
+    super();
+  }
 
-    async verifyCredentials(username: string, password: string): Promise<IUser | null> {
-        const user = await this.userRepository.findOne({
-            where: { 
-                username, 
-                password,
-                status: true 
-            }
-        });
-        
-        return user || null;
-    }
+  async verifyCredentials(
+    username: string,
+    password: string,
+  ): Promise<IUser | null> {
+    const user = await this.userRepository.findOne({
+      where: {
+        username,
+        password,
+        status: true,
+      },
+    });
+
+    return user || null;
+  }
 }
