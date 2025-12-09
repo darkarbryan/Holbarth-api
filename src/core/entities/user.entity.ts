@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../entities/base.entity';
+import { ProductEntity } from './product.entity';
 
 @Entity({ name: 'users', schema: 'public' })
 export class UserEntity extends BaseEntity<UserEntity> {
@@ -35,4 +36,7 @@ export class UserEntity extends BaseEntity<UserEntity> {
     comment: 'Rol del usuario',
   })
   role: string;
+
+  @OneToMany(() => ProductEntity, (product) => product.creator)
+  products: ProductEntity[];
 }

@@ -2,10 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductModule } from '../product/product.module';
 import { UserEntity } from 'src/core/entities';
-import { LoginRepository } from './infraestructure';
-import { LoginPort } from './domain/ports';
+import { LoginRepository, UserRepository } from './infraestructure';
+import { LoginPort, UserPort } from './domain/ports';
 import { LogInService } from './application/use-cases/log-in';
+import { FindUserService, UpdateUserService } from './application/use-cases';
 import { AuthController } from './application/controllers';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
@@ -21,6 +23,7 @@ dotenv.config();
       secret: `${process.env.JWT_SECRET_KEY ?? 'Holbarth2025*'}`,
       signOptions: { expiresIn: '60m' },
     }),
+    ProductModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -28,9 +31,15 @@ dotenv.config();
       provide: LoginPort,
       useClass: LoginRepository,
     },
+    {
+      provide: UserPort,
+      useClass: UserRepository,
+    },
     LogInService,
+    FindUserService,
+    UpdateUserService,
     JwtStrategy,
   ],
-  exports: [LoginPort, PassportModule, JwtModule],
+  exports: [LoginPort, UserPort, PassportModule, JwtModule],
 })
 export class AuthModule {}

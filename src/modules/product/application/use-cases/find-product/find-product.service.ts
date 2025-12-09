@@ -24,4 +24,12 @@ export class FindProductService {
     async findByCategory(categoryId: number): Promise<IProduct[]> {
         return await this.productPort.findByCategory(categoryId);
     }
+
+    async findLowStock(threshold: number): Promise<IProduct[]> {
+        return await this.productPort.findLowStock(threshold);
+    }
+
+    async findByCreator(creatorId: number): Promise<IProduct[]> {
+        return await this.productPort.findByCreator(creatorId);
+    }
 }

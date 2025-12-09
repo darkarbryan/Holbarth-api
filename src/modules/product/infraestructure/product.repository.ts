@@ -25,21 +25,21 @@ export class ProductRepository extends ProductPort {
   async findAll(): Promise<IProduct[]> {
     return await this.productRepository.find({
       where: { status: true },
-      relations: ['productCategory'],
+      relations: ['productCategory', 'creator'],
     });
   }
 
   async findById(id: number): Promise<IProduct | null> {
     return await this.productRepository.findOne({
       where: { id, status: true },
-      relations: ['productCategory'],
+      relations: ['productCategory', 'creator'],
     });
   }
 
   async findByName(name: string): Promise<IProduct | null> {
     return await this.productRepository.findOne({
       where: { name, status: true },
-      relations: ['productCategory'],
+      relations: ['productCategory', 'creator'],
     });
   }
 
@@ -69,7 +69,27 @@ export class ProductRepository extends ProductPort {
         productCategory: { id: categoryId },
         status: true,
       },
-      relations: ['productCategory'],
+      relations: ['productCategory', 'creator'],
+    });
+  }
+
+  async findLowStock(threshold: number): Promise<IProduct[]> {
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.productCategory', 'productCategory')
+      .leftJoinAndSelect('product.creator', 'creator')
+      .where('product.status = :status', { status: true })
+      .andWhere('product.stock < :threshold', { threshold })
+      .getMany();
+  }
+
+  async findByCreator(creatorId: number): Promise<IProduct[]> {
+    return await this.productRepository.find({
+      where: {
+        creatorId,
+        status: true,
+      },
+      relations: ['productCategory', 'creator'],
     });
   }
 }

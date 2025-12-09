@@ -19,6 +19,6 @@ import { UserController } from './application/controllers';
         UpdateUserService,
         DeleteUserService,
     ],
-    exports: [UserPort],
+    exports: [UserPort, FindUserService, UpdateUserService],
 })
 export class UserModule {}

@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../entities/base.entity';
 import { ProductCategoryEntity } from './product-category.entity';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'products', schema: 'public' })
 export class ProductEntity extends BaseEntity<ProductEntity> {
@@ -41,4 +42,14 @@ export class ProductEntity extends BaseEntity<ProductEntity> {
     nullable: true,
   })
   productCategoryId?: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.products)
+  creator: UserEntity;
+
+  @Column({
+    name: 'creator_id',
+    type: 'bigint',
+    nullable: false,
+  })
+  creatorId: number;
 }

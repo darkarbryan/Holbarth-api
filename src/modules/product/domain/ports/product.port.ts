@@ -14,4 +14,6 @@ export abstract class ProductPort {
   ): Promise<IProduct | null>;
   abstract delete(id: number): Promise<boolean>;
   abstract findByCategory(categoryId: number): Promise<IProduct[]>;
+  abstract findLowStock(threshold: number): Promise<IProduct[]>;
+  abstract findByCreator(creatorId: number): Promise<IProduct[]>;
 }
